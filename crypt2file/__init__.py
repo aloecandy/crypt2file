@@ -1,13 +1,19 @@
 __title__ = 'crypt2file'
 __license__ = 'MIT'
 __author__ = 'Kyunghoon (aloecandy@gmail.com)'
-__version__ = '0.1.3'
+__version__ = '0.1.4'
 
 from cryptography.fernet import Fernet
 import os
-
-key_path=os.path.join(os.environ['USERPROFILE'],"secret.key")
-
+from sys import platform
+if "linux" in platform:
+    key_path=os.path.join(os.environ['HOME'],".local/secret.key")
+elif "darwin" in platform:
+    key_path=".secret.key"
+elif "win" in platform:
+    key_path=os.path.join(os.environ['USERPROFILE'],"secret.key")
+else:
+    key_path=".secret.key"
 f=None
 
 def init():
